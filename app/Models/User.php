@@ -17,9 +17,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
         'email',
-        'password',
+        'nickName',
+        'password'
     ];
 
     /**
@@ -40,4 +40,34 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function contactOwn()
+    {
+        return $this->hasMany('App\Models\Contact', 'user_id_1', 'id');
+    }
+
+    public function contact()
+    {
+        return $this->hasMany('App\Models\Contact', 'user_id_2', 'id');
+    }
+
+    public function chatTransmitter()
+    {
+        return $this->hasMany('App\Models\Chat', 'user_id_1', 'id');
+    }
+
+    public function chatReceiver()
+    {
+        return $this->hasMany('App\Models\Chat', 'user_id_2', 'id');
+    }
+
+    public function interest()
+    {
+        return $this->hasMany('App\Models\Interest');
+    }
+
+    public function message()
+    {
+        return $this->hasMany('App\Models\Message');
+    }
 }
