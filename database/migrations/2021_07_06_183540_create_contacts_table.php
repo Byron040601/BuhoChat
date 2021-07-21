@@ -21,6 +21,7 @@ class CreateContactsTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('restrict');
+
             $table->foreignId('user_id_2')
                 ->references('id')
                 ->on('users')
