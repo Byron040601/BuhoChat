@@ -14,7 +14,7 @@ class Chat extends Model
         parent::boot();
         static::creating(function ($chat) {
             $chat->user_id_1 = Auth::id();
-            $chat->user_id_2 = Auth::id();
+
         });
     }
     public function message()
