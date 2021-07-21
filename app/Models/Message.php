@@ -14,7 +14,7 @@ class Message extends Model
     {
         parent::boot();
         static::creating(function ($message) {
-            $message->chat_id = Auth::id();
+            $message->user_id = Auth::id();
         });
     }
 
