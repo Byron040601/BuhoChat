@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         $this->call(UsersTableSeeder::class);
         $this->call(MessagesTableSeeder::class);
+        $this->call(ContactsTableSeeder::class);
+        $this->call(ChatsTableSeeder::class);
+        $this->call(InterestsTableSeeder::class);
         Schema::enableForeignKeyConstraints();
     }
 }
