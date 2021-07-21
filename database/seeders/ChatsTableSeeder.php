@@ -23,7 +23,7 @@ class ChatsTableSeeder extends Seeder
         // iteramos sobre cada uno y simulamos un inicio de
         // sesión con cada uno para crear artículos en su nombre
         $users = User::all();
-        $idsList=User::where('id')->get();
+        $idsList=User::where('id','>=',0)->get();
 
         $idsCount=$idsList->count();
         print($idsCount);
@@ -36,6 +36,8 @@ class ChatsTableSeeder extends Seeder
             for ($j = 0; $j < $num_chats; $j++) {
                 Chat::create([
                     'lastMessage' => $faker->sentence,
+                    'user_id_1' =>  $user->id,
+                    'user_id_2' =>  $faker->numberBetween(1,$idsCount),
 
                 ]);
             }
