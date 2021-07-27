@@ -23,15 +23,15 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'authenticate']);
 
-//Rutas para Interest
-Route::get('interests',[InterestController::class, 'index']);
-Route::get('interests/{interest}',[InterestController::class, 'show']);
-Route::put('interests/{interest}',[InterestController::class, 'update']);
-Route::delete('interests/{interest}',[InterestController::class, 'delete']);
-
 
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', [UserController::class, 'getAuthenticatedUser']);
+
+    //Rutas para Interest
+    Route::get('interests',[InterestController::class, 'index']);
+    Route::get('interests/{interest}',[InterestController::class, 'show']);
+    Route::put('interests/{interest}',[InterestController::class, 'update']);
+    Route::delete('interests/{interest}',[InterestController::class, 'delete']);
 });
 
