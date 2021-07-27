@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'authenticate']);
+
+//contacts
+Route::get('contacts', [ContactController::class, 'index']);
+Route::get('contacts/{contact}', [ContactController::class, 'show']);
+//Route::put('contacts/{contact}', [ContactController::class, 'update']);
+Route::delete('contacts/{contact}', [ContactController::class, 'delete']);
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', [UserController::class, 'getAuthenticatedUser']);
