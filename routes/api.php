@@ -1,11 +1,10 @@
 <?php
 
-
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InterestController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,29 +25,34 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'authenticate']);
 
-Route::group(['middleware' => ['jwt.verify']], function() {
+Route::group(['middleware' => ['jwt.verify']], function () {
     //User
     Route::get('user', [UserController::class, 'getAuthenticatedUser']);
+
     Route::get('users', [UserController::class, 'index']);
-    Route::get('', [UserController::class, 'show']);
-    Route::get('user/{user}', [UserController::class, 'update']);
+    Route::get('users/{user}', [UserController::class, 'show']);
+    Route::put('users/{user}', [UserController::class, 'update']);
+
+    //Rutas para messages
+    Route::get('messages', [MessageController::class, 'index']);
+    Route::get('messages/{message}', [MessageController::class, 'show']);
+    Route::post('messages', [MessageController::class, 'store']);
+    Route::delete('messages/{message}', [MessageController::class, 'delete']);
 
     //Chat
     Route::get('user/{user}/chats', [ChatController::class, 'index']); //para obtener todos los chats de un usuario
 
-
     //contacts
     Route::get('contacts', [ContactController::class, 'index']);
     Route::get('contacts/{contact}', [ContactController::class, 'show']);
-  //Route::put('contacts/{contact}', [ContactController::class, 'update']);
+    //Route::put('contacts/{contact}', [ContactController::class, 'update']);
     Route::delete('contacts/{contact}', [ContactController::class, 'delete']);
 
     //Rutas para Interest
-    Route::get('interests',[InterestController::class, 'index']);
-    Route::get('interests/{interest}',[InterestController::class, 'show']);
-    Route::put('interests/{interest}',[InterestController::class, 'update']);
-    Route::delete('interests/{interest}',[InterestController::class, 'delete']);
-
-
+    Route::get('interests', [InterestController::class, 'index']);
+    Route::get('interests/{interest}', [InterestController::class, 'show']);
+    Route::put('interests/{interest}', [InterestController::class, 'update']);
+    Route::delete('interests/{interest}', [InterestController::class, 'delete']);
 });
+
 

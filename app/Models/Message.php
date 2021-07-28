@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Message extends Model
 {
-    protected $fillable = ['text'];
+    protected $fillable = ['text', 'chat_id'];
 
     public static function boot()
     {
