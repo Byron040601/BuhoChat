@@ -56,25 +56,33 @@ class UserController extends Controller
         }
         return response()->json(compact('user'));
     }
+
     public function index()
     {
         return User::all();
     }
+
     public function show($id)
     {
         return User::find($id);
     }
+
     public function update(Request $request, User $user)
     {
-
         $request->validate([
-            'name' => 'string|max:255',
-            'lastName' => 'string|max:255',
-            'birthdayDate' => 'date',
-            'image' => 'image|max_size:900',
+            'name' => 'nullable|string|max:255',
+            'lastName' => 'nullable|string|max:255',
+            'birthdayDate' => 'nullable|date',
+            'image' => 'nullable|image',
         ]);
 
         $user->update($request->all());
+        if(!is_null($request->image)) {
+            $path = $request->image->store('public/users');
+            $user->image = $path;
+            $user->save();
+        }
+
         return response()-> json($user, 200);
     }
 }

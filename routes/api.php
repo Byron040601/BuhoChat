@@ -31,7 +31,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     Route::get('users', [UserController::class, 'index']);
     Route::get('users/{user}', [UserController::class, 'show']);
-    Route::put('users/{user}', [UserController::class, 'update']);
+    Route::post('users/{user}', [UserController::class, 'update']);
 
     //Rutas para messages
     Route::get('messages', [MessageController::class, 'index']);
