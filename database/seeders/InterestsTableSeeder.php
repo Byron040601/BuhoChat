@@ -33,6 +33,7 @@ class InterestsTableSeeder extends Seeder
             for ($j = 0; $j < $num_interest; $j++) {
                 Interest::create([
                     'text' => $faker->paragraph,
+                    'user_id' => $user->id,
                 ]);
             }
         }

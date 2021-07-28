@@ -2,24 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chat;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        return Chat::all();
+
+        return Chat::all()->where('user_id_1','=',$id);
     }
+    /*
     public function show($id)
     {
         return Chat::find($id);
-    }
+    }*/
     public function store(Request $request)
     {
         return Chat::create($request->all());
     }
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'lastMessage' => 'required|string',
+
+        ]);
         $chat = Chat::findOrFail($id);
         $chat->update($request->all());
         return $chat;

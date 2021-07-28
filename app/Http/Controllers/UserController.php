@@ -56,4 +56,25 @@ class UserController extends Controller
         }
         return response()->json(compact('user'));
     }
+    public function index()
+    {
+        return User::all();
+    }
+    public function show($id)
+    {
+        return User::find($id);
+    }
+    public function update(Request $request, User $user)
+    {
+
+        $request->validate([
+            'name' => 'string|max:255',
+            'lastName' => 'string|max:255',
+            'birthdayDate' => 'date',
+            'image' => 'image|max_size:900',
+        ]);
+
+        $user->update($request->all());
+        return response()-> json($user, 200);
+    }
 }
