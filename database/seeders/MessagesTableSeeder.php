@@ -31,7 +31,6 @@ class MessagesTableSeeder extends Seeder
             foreach ($chats as $chat) {
                 Message::create([
                     'text' => $faker->paragraph,
-                    'dateTime' => $faker->dateTime,
                     'chat_id' => $chat->id,
                 ]);
             }
