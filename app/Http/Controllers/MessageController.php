@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewComment;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class MessageController extends Controller
 {
@@ -25,6 +27,7 @@ class MessageController extends Controller
             'chat_id' => 'required'
         ]);
         $message = Message::create($validatedData);
+        Mail::to($message->user)->send(new NewComment($message));
         return response()->json($message, 201);
     }
 
