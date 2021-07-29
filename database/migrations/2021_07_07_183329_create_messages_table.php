@@ -15,7 +15,7 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->text('text');
+            $table->text('text')->nullable();
             $table->foreignId('chat_id')
                 ->references('id')
                 ->on('chats')
@@ -24,6 +24,7 @@ class CreateMessagesTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('restrict');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
