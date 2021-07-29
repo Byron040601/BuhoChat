@@ -23,11 +23,19 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'text' => 'required|string',
-            'chat_id' => 'required'
+            'text' => 'nullable|string',
+            'chat_id' => 'required',
+            'image' => 'nullable|image',
         ]);
         $message = Message::create($validatedData);
         Mail::to($message->user)->send(new NewComment($message));
+
+        if(!is_null($request->image)) {
+            $path = $request->image->store('public/messages');
+            $message->image = $path;
+            $message->save();
+        }
+
         return response()->json($message, 201);
     }
 
