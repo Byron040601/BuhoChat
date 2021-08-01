@@ -41,6 +41,12 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //Chat
     Route::get('user/{user}/chats', [ChatController::class, 'index']); //para obtener todos los chats de un usuario
+    Route::get('chats/{chat}', [ChatController::class, 'show']);
+    Route::get('chat/{chat}/messages', [ChatController::class, 'messages']);
+    Route::post('chats', [ChatController::class, 'store']);
+    Route::delete('chats', [ChatController::class, 'delete']);
+    Route::put('chats/{chat}', [ChatController::class, 'update']);
+
 
     //contacts
     Route::get('contacts', [ContactController::class, 'index']);

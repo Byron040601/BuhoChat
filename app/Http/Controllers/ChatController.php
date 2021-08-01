@@ -12,13 +12,14 @@ class ChatController extends Controller
 
         return Chat::all()->where('user_id_1','=',$id);
     }
-    /*
+
     public function show($id)
     {
         return Chat::find($id);
-    }*/
+    }
     public function store(Request $request)
     {
+
         return Chat::create($request->all());
     }
     public function update(Request $request, $id)
@@ -36,5 +37,10 @@ class ChatController extends Controller
         $chat = Chat::findOrFail($id);
         $chat->delete();
         return 204;
+    }
+
+    public function messages(Chat $chat){
+
+        return response()->json($chat->message, 201);
     }
 }
