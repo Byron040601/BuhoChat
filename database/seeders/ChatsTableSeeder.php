@@ -26,7 +26,7 @@ class ChatsTableSeeder extends Seeder
         $idsList=User::where('id','>=',0)->get();
 
         $idsCount=$idsList->count();
-        print($idsCount);
+
         foreach ($users as $user) {
             // iniciamos sesión con este usuario
             JWTAuth::attempt(['email' => $user->email, 'password' => '123123']);

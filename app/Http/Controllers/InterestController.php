@@ -7,17 +7,19 @@ use Illuminate\Http\Request;
 
 class InterestController extends Controller
 {
-    public function index()
-    {
-        return Interest::all();
-    }
+//    public function index()
+//    {
+//        return Interest::all();
+//    }
     public function show(Interest $interest)
     {
+        //$this->authorize('view', $interest);
         return $interest;
     }
 
     public function update(Request $request, Interest $interest)
     {
+        $this->authorize('update', $interest);
         $validatedData = $request->validate([
             'text' => 'required|string',
         ]);
@@ -27,6 +29,7 @@ class InterestController extends Controller
     }
     public function delete(Interest $interest)
     {
+        $this->authorize('delete', $interest);
         $interest->delete();
         return response()->json(null, 204);
     }

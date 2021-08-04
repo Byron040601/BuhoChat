@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller
 {
@@ -19,7 +20,10 @@ class UserController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-        return response()->json(compact('token'));
+
+        $user = User::all()->where('email', '=', $request->email);
+        return response()->json(compact('user', 'token'));
+
     }
 
     public function register(Request $request)
@@ -38,7 +42,8 @@ class UserController extends Controller
             'password' => Hash::make($request->get('password')),
         ]);
         $token = JWTAuth::fromUser($user);
-        return response()->json(compact('user','token'),201);
+
+        return response()->json(new UserResource($user, $token),201);
     }
 
     public function getAuthenticatedUser()
@@ -54,7 +59,8 @@ class UserController extends Controller
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
             return response()->json(['token_absent'], $e->getStatusCode());
         }
-        return response()->json(compact('user'));
+
+        return response()->json(new UserResource($user),200);
     }
 
     public function index()

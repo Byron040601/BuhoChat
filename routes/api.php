@@ -25,11 +25,12 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'authenticate']);
 
+
 Route::group(['middleware' => ['jwt.verify']], function () {
     //User
     Route::get('user', [UserController::class, 'getAuthenticatedUser']);
-
     Route::get('users', [UserController::class, 'index']);
+
     Route::get('users/{user}', [UserController::class, 'show']);
     Route::post('users/{user}', [UserController::class, 'update']);
 
@@ -40,22 +41,22 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::delete('messages/{message}', [MessageController::class, 'delete']);
 
     //Chat
-    Route::get('user/{user}/chats', [ChatController::class, 'index']); //para obtener todos los chats de un usuario
+    Route::get('chats', [ChatController::class, 'index']); //para obtener todos los chats de un usuario
     Route::get('chats/{chat}', [ChatController::class, 'show']);
     Route::get('chat/{chat}/messages', [ChatController::class, 'messages']);
     Route::post('chats', [ChatController::class, 'store']);
-    Route::delete('chats', [ChatController::class, 'delete']);
+    Route::delete('chats/{chat}', [ChatController::class, 'delete']);
     Route::put('chats/{chat}', [ChatController::class, 'update']);
 
 
     //contacts
     Route::get('contacts', [ContactController::class, 'index']);
     Route::get('contacts/{contact}', [ContactController::class, 'show']);
-    //Route::put('contacts/{contact}', [ContactController::class, 'update']);
+    Route::put('contacts/{contact}', [ContactController::class, 'update']);
     Route::delete('contacts/{contact}', [ContactController::class, 'delete']);
 
     //Rutas para Interest
-    Route::get('interests', [InterestController::class, 'index']);
+    //Route::get('interests', [InterestController::class, 'index']);
     Route::get('interests/{interest}', [InterestController::class, 'show']);
     Route::put('interests/{interest}', [InterestController::class, 'update']);
     Route::delete('interests/{interest}', [InterestController::class, 'delete']);

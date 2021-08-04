@@ -19,7 +19,7 @@ class CreateMessagesTable extends Migration
             $table->foreignId('chat_id')
                 ->references('id')
                 ->on('chats')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
             $table->foreignId('user_id')
                 ->references('id')
                 ->on('users')

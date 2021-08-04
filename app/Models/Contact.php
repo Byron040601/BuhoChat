@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 class Contact extends Model
 {
+    protected $fillable= ['friend'];
+
     public static function boot()
     {
         parent::boot();

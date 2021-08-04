@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\NewComment;
+use App\Models\Chat;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -12,11 +13,21 @@ class MessageController extends Controller
 
     public function index(Message $message)
     {
-        return Message::all();
+        $messagesO = Message::all();
+        $messages = [];
+
+        foreach ($messagesO as $message){
+            if($message->user_id === auth()->user()->id || $message->user_id_2 === auth()->user()->id){
+                $messages[] = $message;
+            }
+        }
+
+        return response()->json($messages, 200);
     }
 
     public function show(Message $message)
     {
+        $this->authorize('view', $message);
         return $message;
     }
 
@@ -24,7 +35,7 @@ class MessageController extends Controller
     {
         $validatedData = $request->validate([
             'text' => 'nullable|string',
-            'chat_id' => 'required',
+            'chat_id' => 'required|exists:App\Models\Chat,id',
             'image' => 'nullable|image',
         ]);
         $message = Message::create($validatedData);
@@ -41,7 +52,8 @@ class MessageController extends Controller
 
     public function delete(Message $message)
     {
+        $this->authorize('delete', $message);
         $message->delete();
-        return response()->json(null, 204);
+        return 204;
     }
 }
